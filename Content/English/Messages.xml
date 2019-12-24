@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<messages>
+    <win>You've won. Congratulations!</win>
+    <loss>Alas, you've lost. Too bad for the poor hanged dude.</loss>
+    <loss_cipher>The correct word was: </loss_cipher>
+    <continue>Feel free to start a new game by entering. Or you can try turning it off and on again.</continue>
+    <move>Enter the letter you think is in the word.</move>
+</messages>

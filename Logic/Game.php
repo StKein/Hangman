@@ -10,9 +10,9 @@ class Game {
     private $result;
 
 
-    public function __construct()
+    public function __construct($language)
     {
-        $words = mb_split("\r\n", file_get_contents(__DIR__."/../Content/English.txt"));
+        $words = mb_split("\r\n", file_get_contents(__DIR__."/../Content/".$language."/Words.txt"));
         $this->cipher = $words[random_int( 0, count($words) - 1)];
         $this->guess = str_repeat("-", mb_strlen($this->cipher));
         $this->errors = "-";
