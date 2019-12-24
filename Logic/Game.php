@@ -12,9 +12,9 @@ class Game {
 
     public function __construct($language)
     {
-        $words = mb_split("\r\n", file_get_contents(__DIR__."/../Content/".$language."/Words.txt"));
+        $words = explode("\r\n", file_get_contents(__DIR__."/../Content/".$language."/Words.txt"));
         $this->cipher = $words[random_int( 0, count($words) - 1)];
-        $this->guess = str_repeat("-", mb_strlen($this->cipher));
+        $this->guess = array_fill(0, mb_strlen($this->cipher), "-");
         $this->errors = "-";
         $this->hangman_stage = 8;
         $this->result = 0;
@@ -22,7 +22,7 @@ class Game {
 
     public function processMove($char)
     {
-        if (!$char || mb_strpos($this->guess, $char) !== false || mb_strpos($this->errors, $char) !== false) {
+        if (!$char || in_array($char, $this->guess) || mb_strpos($this->errors, $char) !== false) {
             return;
         }
 
@@ -32,7 +32,7 @@ class Game {
                 $this->guess[$pos] = $char;
                 $pos = mb_strpos($this->cipher, $char, $pos+1);
             }
-            if ($this->guess == $this->cipher) {
+            if (implode("", $this->guess) == $this->cipher) {
                 $this->result = 1;
             }
             return;
@@ -48,7 +48,7 @@ class Game {
     public function getGameState()
     {
         return [
-            'guess' => $this->guess,
+            'guess' => implode("", $this->guess),
             'errors' => $this->errors,
             'hangman_stage' => $this->hangman_stage,
             'result' => $this->result,
