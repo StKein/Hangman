@@ -4,11 +4,13 @@ namespace Hangman\Content;
 class ContentMaster{
 
     private $hangman;
+    private $messages;
 
-    public function __construct()
+    public function __construct($language)
     {
         include_once "Hangman.php";
         $this->hangman = $hangmann;
+        $this->messages = simplexml_load_file(__DIR__."/".$language."/Messages.xml");
     }
 
     public function printContent($game_state)
@@ -37,15 +39,16 @@ class ContentMaster{
     {
         switch ($game_result) {
             case '1':
-                $this->print("You've won! Congratulations. Enter anything to start a new game");
+                $this->print($this->messages->win);
+                $this->print($this->messages->continue);
             break;
             case '-1':
-                $this->print("You've lost. Too bad for the poor hanged dude. ".
-                            "The correct word was: ".$cipher.". ".
-                            "Feel free to start a new game by entering");
+                $this->print($this->messages->loss);
+                $this->print($this->messages->loss_cipher.$cipher);
+                $this->print($this->messages->continue);
             break;
             default:
-                $this->print("Enter the letter you think is in the word");
+                $this->print($this->messages->move);
             break;
         }
     }

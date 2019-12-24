@@ -10,7 +10,8 @@ spl_autoload_register(function($class){
     require_once $class;
 });
 
-$gm = new Logic\GameMaster();
+$lang = mb_strtolower($argv[1]) ?? "";
+$gm = new Logic\GameMaster($lang);
 $input = "";
 do {
 	$input = readline();
